@@ -849,6 +849,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				var myLeft = 0,
 					myLeftMirror = 0,
 					myTop = 0,
+					distance = parseInt(self.options.distance),
 					offsetY = parseInt(self.options.offsetY),
 					offsetX = parseInt(self.options.offsetX),
 					// this is the arrow position that will eventually be used. It may differ from the position option if the tooltip cannot be displayed in this position
