@@ -1,5 +1,13 @@
-Tooltipster
+
+
+
+Tooltipster Fork from v3.3.0
 ===========
+## Additional Features
+- Added css class of tooltip position with container
+- Added distance property as configurable
+
+
 
 A jQuery tooltip plugin by Caleb Jacob under MIT license.  
 Compatible with Mozilla Firefox, Google Chrome, IE8+ and others. Requires jQuery 1.7+
