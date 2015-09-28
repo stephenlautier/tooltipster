@@ -1,6 +1,6 @@
 /*
 
-Tooltipster 3.5.1-sl | 2015-09-10
+Tooltipster 3.5.2-sl | 2015-09-28
 A rockin' custom tooltip jQuery plugin
 
 Developed by Caleb Jacob under the MIT license http://opensource.org/licenses/MIT
@@ -979,6 +979,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 						arrowReposition = 'right';
 					}
 				}
+
+				var tooltipsterPosition = practicalPosition;
 				
 				// if arrow is set true, style it and append it
 				if (self.options.arrow) {
@@ -1000,10 +1002,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 					else if (arrowReposition == 'left') {
 						arrowClass = 'tooltipster-arrow-right';
 						arrowReposition = '';
+						tooltipsterPosition = "right";
 					}
 					else if (arrowReposition == 'right') {
 						arrowClass = 'tooltipster-arrow-left';
 						arrowReposition = '';
+						tooltipsterPosition = "left";
 					}
 					else {
 						arrowReposition = 'left:'+ Math.round(arrowReposition) +'px;';
@@ -1062,7 +1066,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 					self.$tooltip.append(arrowConstruct);
 				}
 				// add class indicating which is the actual position with the tooltip container.
-				self.$tooltip.addClass("tooltipster-" + practicalPosition)
+				self.$tooltip.addClass("tooltipster-" + tooltipsterPosition)
 				
 				// position the tooltip
 				self.$tooltip.css({'top': Math.round(myTop) + 'px', 'left': Math.round(myLeft) + 'px'});
