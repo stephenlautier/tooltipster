@@ -1,6 +1,6 @@
 /*
 
-Tooltipster 3.3.0 | 2014-11-08
+Tooltipster 3.5.2-sl | 2015-09-28
 A rockin' custom tooltip jQuery plugin
 
 Developed by Caleb Jacob under the MIT license http://opensource.org/licenses/MIT
@@ -22,6 +22,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			contentCloning: true,
 			debug: true,
 			delay: 200,
+			distance: 12,
 			minWidth: 0,
 			maxWidth: null,
 			functionInit: function(origin, content) {},
@@ -848,6 +849,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				var myLeft = 0,
 					myLeftMirror = 0,
 					myTop = 0,
+					distance = parseInt(self.options.distance),
 					offsetY = parseInt(self.options.offsetY),
 					offsetX = parseInt(self.options.offsetX),
 					// this is the arrow position that will eventually be used. It may differ from the position option if the tooltip cannot be displayed in this position
@@ -874,35 +876,35 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				// a function to detect if the tooltip is going off the screen vertically. If so, switch to the opposite!
 				function dontGoOffScreenY(switchTo, switchFrom) {
 					// if it goes off the top off the page
-					if(((proxy.offset.top - $(window).scrollTop() - tooltipHeight - offsetY - 12) < 0) && (switchFrom.indexOf('top') > -1)) {
+					if(((proxy.offset.top - $(window).scrollTop() - tooltipHeight - offsetY - distance) < 0) && (switchFrom.indexOf('top') > -1)) {
 						practicalPosition = switchTo;
 					}
 					
 					// if it goes off the bottom of the page
-					if (((proxy.offset.top + proxy.dimension.height + tooltipHeight + 12 + offsetY) > ($(window).scrollTop() + $(window).height())) && (switchFrom.indexOf('bottom') > -1)) {
+					if (((proxy.offset.top + proxy.dimension.height + tooltipHeight + distance + offsetY) > ($(window).scrollTop() + $(window).height())) && (switchFrom.indexOf('bottom') > -1)) {
 						practicalPosition = switchTo;
-						myTop = (proxy.offset.top - tooltipHeight) - offsetY - 12;
+						myTop = (proxy.offset.top - tooltipHeight) - offsetY - distance;
 					}
 				}
 				
 				if(practicalPosition == 'top') {
 					var leftDifference = (proxy.offset.left + tooltipWidth) - (proxy.offset.left + proxy.dimension.width);
 					myLeft = (proxy.offset.left + offsetX) - (leftDifference / 2);
-					myTop = (proxy.offset.top - tooltipHeight) - offsetY - 12;
+					myTop = (proxy.offset.top - tooltipHeight) - offsetY - distance;
 					dontGoOffScreenX();
 					dontGoOffScreenY('bottom', 'top');
 				}
 				
 				if(practicalPosition == 'top-left') {
 					myLeft = proxy.offset.left + offsetX;
-					myTop = (proxy.offset.top - tooltipHeight) - offsetY - 12;
+					myTop = (proxy.offset.top - tooltipHeight) - offsetY - distance;
 					dontGoOffScreenX();
 					dontGoOffScreenY('bottom-left', 'top-left');
 				}
 				
 				if(practicalPosition == 'top-right') {
 					myLeft = (proxy.offset.left + proxy.dimension.width + offsetX) - tooltipWidth;
-					myTop = (proxy.offset.top - tooltipHeight) - offsetY - 12;
+					myTop = (proxy.offset.top - tooltipHeight) - offsetY - distance;
 					dontGoOffScreenX();
 					dontGoOffScreenY('bottom-right', 'top-right');
 				}
@@ -910,28 +912,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 				if(practicalPosition == 'bottom') {
 					var leftDifference = (proxy.offset.left + tooltipWidth) - (proxy.offset.left + proxy.dimension.width);
 					myLeft = proxy.offset.left - (leftDifference / 2) + offsetX;
-					myTop = (proxy.offset.top + proxy.dimension.height) + offsetY + 12;
+					myTop = (proxy.offset.top + proxy.dimension.height) + offsetY + distance;
 					dontGoOffScreenX();
 					dontGoOffScreenY('top', 'bottom');
 				}
 				
 				if(practicalPosition == 'bottom-left') {
 					myLeft = proxy.offset.left + offsetX;
-					myTop = (proxy.offset.top + proxy.dimension.height) + offsetY + 12;
+					myTop = (proxy.offset.top + proxy.dimension.height) + offsetY + distance;
 					dontGoOffScreenX();
 					dontGoOffScreenY('top-left', 'bottom-left');
 				}
 				
 				if(practicalPosition == 'bottom-right') {
 					myLeft = (proxy.offset.left + proxy.dimension.width + offsetX) - tooltipWidth;
-					myTop = (proxy.offset.top + proxy.dimension.height) + offsetY + 12;
+					myTop = (proxy.offset.top + proxy.dimension.height) + offsetY + distance;
 					dontGoOffScreenX();
 					dontGoOffScreenY('top-right', 'bottom-right');
 				}
 				
 				if(practicalPosition == 'left') {
-					myLeft = proxy.offset.left - offsetX - tooltipWidth - 12;
-					myLeftMirror = proxy.offset.left + offsetX + proxy.dimension.width + 12;
+					myLeft = proxy.offset.left - offsetX - tooltipWidth - distance;
+					myLeftMirror = proxy.offset.left + offsetX + proxy.dimension.width + distance;
 					var topDifference = (proxy.offset.top + tooltipHeight) - (proxy.offset.top + proxy.dimension.height);
 					myTop = proxy.offset.top - (topDifference / 2) - offsetY;
 					
@@ -942,21 +944,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 						self.$tooltip.css('width', newWidth + 'px');
 						
 						tooltipHeight = self.$tooltip.outerHeight(false);
-						myLeft = proxy.offset.left - offsetX - newWidth - 12 - borderWidth;
+						myLeft = proxy.offset.left - offsetX - newWidth - distance - borderWidth;
 						topDifference = (proxy.offset.top + tooltipHeight) - (proxy.offset.top + proxy.dimension.height);
 						myTop = proxy.offset.top - (topDifference / 2) - offsetY;
 					}
 					
 					// if it only goes off one side, flip it to the other side
 					else if(myLeft < 0) {
-						myLeft = proxy.offset.left + offsetX + proxy.dimension.width + 12;
+						myLeft = proxy.offset.left + offsetX + proxy.dimension.width + distance;
 						arrowReposition = 'left';
 					}
 				}
 				
 				if(practicalPosition == 'right') {
-					myLeft = proxy.offset.left + offsetX + proxy.dimension.width + 12;
-					myLeftMirror = proxy.offset.left - offsetX - tooltipWidth - 12;
+					myLeft = proxy.offset.left + offsetX + proxy.dimension.width + distance;
+					myLeftMirror = proxy.offset.left - offsetX - tooltipWidth - distance;
 					var topDifference = (proxy.offset.top + tooltipHeight) - (proxy.offset.top + proxy.dimension.height);
 					myTop = proxy.offset.top - (topDifference / 2) - offsetY;
 					
@@ -973,10 +975,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 						
 					// if it only goes off one side, flip it to the other side
 					else if((myLeft + tooltipWidth) > windowWidth) {
-						myLeft = proxy.offset.left - offsetX - tooltipWidth - 12;
+						myLeft = proxy.offset.left - offsetX - tooltipWidth - distance;
 						arrowReposition = 'right';
 					}
 				}
+
+				var tooltipsterPosition = practicalPosition;
 				
 				// if arrow is set true, style it and append it
 				if (self.options.arrow) {
@@ -998,10 +1002,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 					else if (arrowReposition == 'left') {
 						arrowClass = 'tooltipster-arrow-right';
 						arrowReposition = '';
+						tooltipsterPosition = "right";
 					}
 					else if (arrowReposition == 'right') {
 						arrowClass = 'tooltipster-arrow-left';
 						arrowReposition = '';
+						tooltipsterPosition = "left";
 					}
 					else {
 						arrowReposition = 'left:'+ Math.round(arrowReposition) +'px;';
@@ -1060,7 +1066,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 					self.$tooltip.append(arrowConstruct);
 				}
 				// add class indicating which is the actual position with the tooltip container.
-				self.$tooltip.addClass("tooltipster-" + practicalPosition)
+				self.$tooltip.addClass("tooltipster-" + tooltipsterPosition)
 				
 				// position the tooltip
 				self.$tooltip.css({'top': Math.round(myTop) + 'px', 'left': Math.round(myLeft) + 'px'});
